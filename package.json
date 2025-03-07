@@ -1,0 +1,27 @@
+{
+  "name": "api_testing",
+  "version": "1.0.0",
+  "description": "Ide lesznek feltöltve a példák API tesztelésről a szakdolgozatomhoz, amiben a Jest keretrendszert és a PactumJS-t fogom használni.",
+  "homepage": "https://github.com/vargazsolt0924/API_Testing#readme",
+  "bugs": {
+    "url": "https://github.com/vargazsolt0924/API_Testing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vargazsolt0924/API_Testing.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "pactum": "^3.7.6"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
