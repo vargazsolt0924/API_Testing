@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --config ./jest.config.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
