@@ -10,4 +10,4 @@ const setup = () => {
     request.setDefaultTimeout(30_000);
 }
 
-module.exports = setup;
+setup();
