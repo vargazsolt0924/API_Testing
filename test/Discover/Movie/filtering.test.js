@@ -16,7 +16,7 @@ describe(testData.filters.describe, () => {
 
   describe(testData.filters.yearDescribe, () => {
     testData.filters.cases.forEach(({ label, check }) => {
-      it(`should return movies released in ${label}`, () => {
+      it(`${testData.filters.yearTest} ${label}`, () => {
         filterResponses[label].body.results.forEach((movie) => {
           expect(check(movie)).toBe(true);
         });
@@ -26,7 +26,7 @@ describe(testData.filters.describe, () => {
 
   describe(testData.filters.genreDescribe, () => {
     testData.filters.genreCases.forEach(({ label, check }) => {
-      it(`should return only ${label} movies`, () => {
+      it(`${testData.filters.genreTest} ${label}`, () => {
         filterResponses[label].body.results.forEach((movie) => {
           expect(check(movie)).toBe(true);
         });

@@ -48,12 +48,12 @@ const testCases = {
       {
         query: { with_genres: 28 },
         check: (movie) => movie.genre_ids.includes(28),
-        label: 'Action (28)',
+        label: '28',
       },
       {
         query: { with_genres: 35 },
         check: (movie) => movie.genre_ids.includes(35),
-        label: 'Comedy (35)',
+        label: '35',
       },
     ],
   },
