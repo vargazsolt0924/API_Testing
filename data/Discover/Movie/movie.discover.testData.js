@@ -21,13 +21,40 @@ const testCases = {
 
   filters: {
     describe: 'Movie filtering tests',
-    yearDescribe: 'When filtering by release year (2020)',
-    genreDescribe: 'When filtering by genre (Action - ID: 28)',
-    yearTest: 'should return movies released in 2020',
-    genreTest: 'should return only action movies',
+    yearDescribe: 'When filtering by release year',
+    genreDescribe: 'When filtering by genre',
+    yearTest: 'should return movies released in the given year',
+    genreTest: 'should return only movies with the given genre',
+
     cases: [
-      { query: { primary_release_year: 2020 }, check: (movie) => movie.release_date.startsWith('2020') },
-      { query: { with_genres: 28 }, check: (movie) => movie.genre_ids.includes(28) },
+      {
+        query: { primary_release_year: 2019 },
+        check: (movie) => movie.release_date.startsWith('2019'),
+        label: '2019',
+      },
+      {
+        query: { primary_release_year: 2020 },
+        check: (movie) => movie.release_date.startsWith('2020'),
+        label: '2020',
+      },
+      {
+        query: { primary_release_year: 2021 },
+        check: (movie) => movie.release_date.startsWith('2021'),
+        label: '2021',
+      },
+    ],
+
+    genreCases: [
+      {
+        query: { with_genres: 28 },
+        check: (movie) => movie.genre_ids.includes(28),
+        label: 'Action (28)',
+      },
+      {
+        query: { with_genres: 35 },
+        check: (movie) => movie.genre_ids.includes(35),
+        label: 'Comedy (35)',
+      },
     ],
   },
 
