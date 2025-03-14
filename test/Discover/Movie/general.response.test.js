@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const testData = require("../../../data/Discover/Movie/movie.discover.testData");
 
-describe('General response test from TMDB Discover', () => {
+describe(testData.general.mainDescribe, () => {
   let discoverMovie;
   let response;
 
@@ -10,16 +10,16 @@ describe('General response test from TMDB Discover', () => {
     response = await discoverMovie.expectStatus(200).toss();
   });
 
-  describe('When the request is successful', () => {
-    it('should return status code 200', () => {
+  describe(testData.general.successDescribe, () => {
+    it(testData.general.statusCodeTest, () => {
       expect(response.statusCode).toBe(200);
     });
 
-    it('should return a valid schema', () => {
+    it(testData.general.schemaValidationTest, () => {
       discoverMovie.response().to.have.jsonSchema(testData.expectedSchema);
     });
 
-    it('should return non-empty results', () => {
+    it(testData.general.nonEmptyResultsTest, () => {
       expect(response.body.results.length).toBeGreaterThan(0);
     });
   });

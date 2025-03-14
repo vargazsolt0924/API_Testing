@@ -1,33 +1,32 @@
 const { spec } = require("pactum");
 const testData = require("../../../data/Discover/Movie/movie.discover.testData");
 
-describe('Pagination tests', () => {
-  let paginationCaseOne, paginationCaseTwo;
+describe(testData.pagination.describe, () => {
+  let validResponse, invalidResponse;
 
   beforeAll(async () => {
-    const paginationCase1 = testData.paginationCases[0];
-    const paginationCase2 = testData.paginationCases[1];
+    const [validCase, invalidCase] = testData.pagination.cases;
 
-    paginationCaseOne = await spec().get('/discover/movie')
-      .withQueryParams('page', paginationCase1.query.page)
-      .expectStatus(paginationCase1.expectedStatus)
+    validResponse = await spec().get('/discover/movie')
+      .withQueryParams('page', validCase.query.page)
+      .expectStatus(validCase.expectedStatus)
       .toss();
 
-    paginationCaseTwo = await spec().get('/discover/movie')
-      .withQueryParams('page', paginationCase2.query.page)
-      .expectStatus(paginationCase2.expectedStatus)
+    invalidResponse = await spec().get('/discover/movie')
+      .withQueryParams('page', invalidCase.query.page)
+      .expectStatus(invalidCase.expectedStatus)
       .toss();
   });
 
-  describe('When valid pagination is used', () => {
-    it('should return corresponding results for the given page', () => {
-      expect(paginationCaseOne.body.page).toBe(testData.paginationCases[0].expectedPage);
+  describe(testData.pagination.validDescribe, () => {
+    it(testData.pagination.validTest, () => {
+      expect(validResponse.body.page).toBe(testData.pagination.cases[0].expectedPage);
     });
   });
 
-  describe('When invalid pagination is used', () => {
-    it('should return HTTP 400 for invalid pagination query', () => {
-      expect(paginationCaseTwo.statusCode).toBe(400);
+  describe(testData.pagination.invalidDescribe, () => {
+    it(testData.pagination.invalidTest, () => {
+      expect(invalidResponse.statusCode).toBe(400);
     });
   });
 });
