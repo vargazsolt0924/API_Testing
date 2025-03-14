@@ -1,5 +1,5 @@
-const { spec } = require("pactum");
-const testData = require("../../../data/Discover/Movie/movie.discover.testData");
+const { spec } = require('pactum');
+const testData = require('../../../data/Discover/Movie/movie.discover.testData');
 
 describe(testData.pagination.describe, () => {
   let validResponse, invalidResponse;
@@ -7,15 +7,9 @@ describe(testData.pagination.describe, () => {
   beforeAll(async () => {
     const [validCase, invalidCase] = testData.pagination.cases;
 
-    validResponse = await spec().get('/discover/movie')
-      .withQueryParams('page', validCase.query.page)
-      .expectStatus(validCase.expectedStatus)
-      .toss();
+    validResponse = await spec().get('/discover/movie').withQueryParams('page', validCase.query.page).expectStatus(validCase.expectedStatus).toss();
 
-    invalidResponse = await spec().get('/discover/movie')
-      .withQueryParams('page', invalidCase.query.page)
-      .expectStatus(invalidCase.expectedStatus)
-      .toss();
+    invalidResponse = await spec().get('/discover/movie').withQueryParams('page', invalidCase.query.page).expectStatus(invalidCase.expectedStatus).toss();
   });
 
   describe(testData.pagination.validDescribe, () => {

@@ -18,8 +18,8 @@ describe(testData.authErrors.describe, () => {
       .toss();
   });
 
-  describe(testData.authErrors.missingDescribe, () => {
-    it(testData.authErrors.missingTest, () => {
+  describe(testData.authErrors.emptyDescribe, () => {
+    it(testData.authErrors.emptyTest, () => {
       expect(responseWithoutToken.statusCode).toBe(401);
     });
   });

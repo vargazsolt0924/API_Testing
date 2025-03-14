@@ -1,5 +1,5 @@
-const { spec } = require("pactum");
-const testData = require("../../../data/Discover/Movie/movie.discover.testData");
+const { spec } = require('pactum');
+const testData = require('../../../data/Discover/Movie/movie.discover.testData');
 
 describe(testData.general.mainDescribe, () => {
   let discoverMovie;
