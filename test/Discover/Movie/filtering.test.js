@@ -1,36 +1,34 @@
 const { spec } = require('pactum');
-const testData = require('../../../data/Discover/Movie/movie.discover.testData');
+const { filterCases } = require('../../../data/Discover/Movie/filtering.testData');
 
-describe(testData.filters.describe, () => {
-  let filterResponses = {};
+describe('Discover - Movie - Filtering test', () => {
+  describe.each(filterCases)('$description', (data) => {
+    let discoverMovies;
+    let body;
 
-  beforeAll(async () => {
-    for (const testCase of testData.filters.cases) {
-      filterResponses[testCase.label] = await spec().get('/discover/movie').withQueryParams(testCase.query).expectStatus(200).toss();
-    }
+    beforeAll(async () => {
+      discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+      body = await discoverMovies.expectStatus(200).toss();
+    });
 
-    for (const genreCase of testData.filters.genreCases) {
-      filterResponses[genreCase.label] = await spec().get('/discover/movie').withQueryParams(genreCase.query).expectStatus(200).toss();
-    }
-  });
+    it(`status code should be ${data.expectedStatus}`, () => {
+      expect(body.statusCode).toBe(data.expectedStatus);
+    });
 
-  describe(testData.filters.yearDescribe, () => {
-    testData.filters.cases.forEach(({ label, check }) => {
-      it(`${testData.filters.yearTest} ${label}`, () => {
-        filterResponses[label].body.results.forEach((movie) => {
-          expect(check(movie)).toBe(true);
+    if (data.query.primary_release_year) {
+      it(`all movies should have a release date starting with ${data.query.primary_release_year}`, () => {
+        body.body.results.forEach((movie) => {
+          expect(movie.release_date.startsWith(data.query.primary_release_year)).toBe(true);
         });
       });
-    });
-  });
+    }
 
-  describe(testData.filters.genreDescribe, () => {
-    testData.filters.genreCases.forEach(({ label, check }) => {
-      it(`${testData.filters.genreTest} ${label}`, () => {
-        filterResponses[label].body.results.forEach((movie) => {
-          expect(check(movie)).toBe(true);
+    if (data.query.with_genres) {
+      it(`and all movies should include genre ID ${data.query.with_genres}`, () => {
+        body.body.results.forEach((movie) => {
+          expect(movie.genre_ids.includes(data.query.with_genres)).toBe(true);
         });
       });
-    });
+    }
   });
 });

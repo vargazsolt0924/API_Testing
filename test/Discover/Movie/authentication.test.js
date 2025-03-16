@@ -1,32 +1,22 @@
-const { spec } = require("pactum");
-const testData = require("../../../data/Discover/Movie/movie.discover.testData");
+const { spec } = require('pactum');
+const { authErrors } = require('../../../data/Discover/Movie/authentication.testData');
 
-describe(testData.authErrors.describe, () => {
-  let responseWithoutToken, responseWithInvalidToken;
+describe('Discover - Movie - Authentication Errors test', () => {
+  describe.each(authErrors)('$description', (data) => {
+    let discoverMovies;
+    let body;
 
-  beforeAll(async () => {
-    const [missingCase, invalidCase] = testData.authErrors.cases;
-
-    responseWithoutToken = await spec().get('/discover/movie')
-      .withHeaders('Authorization', missingCase.headers.Authorization)
-      .expectStatus(missingCase.expectedStatus)
-      .toss();
-
-    responseWithInvalidToken = await spec().get('/discover/movie')
-      .withHeaders('Authorization', invalidCase.headers.Authorization)
-      .expectStatus(invalidCase.expectedStatus)
-      .toss();
-  });
-
-  describe(testData.authErrors.emptyDescribe, () => {
-    it(testData.authErrors.emptyTest, () => {
-      expect(responseWithoutToken.statusCode).toBe(401);
+    beforeAll(async () => {
+      discoverMovies = spec().get('/discover/movie').withHeaders('Authorization', data.headersAuth);
+      body = await discoverMovies.expectStatus(data.expectedStatus).toss();
     });
-  });
 
-  describe(testData.authErrors.invalidDescribe, () => {
-    it(testData.authErrors.invalidTest, () => {
-      expect(responseWithInvalidToken.statusCode).toBe(401);
+    it(`status code should be ${data.expectedStatus}`, () => {
+      expect(body.statusCode).toBe(data.expectedStatus);
+    });
+
+    it('response body should be correct', () => {
+      expect(body.body).toEqual(data.response);
     });
   });
 });

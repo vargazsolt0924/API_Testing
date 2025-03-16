@@ -15,7 +15,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config ./jest.config.js"
+    "test": "jest --config ./jest.config.js",
+    "lint": "eslint ./ --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

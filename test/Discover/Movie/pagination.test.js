@@ -1,26 +1,49 @@
 const { spec } = require('pactum');
-const testData = require('../../../data/Discover/Movie/movie.discover.testData');
+const { paginationSuccessfulTestCases, paginationInvalidTestCases } = require('../../../data/Discover/Movie/pagination.testData');
+const { successfulSchema } = require('../../../schema/Discover/movie.schema');
 
-describe(testData.pagination.describe, () => {
-  let validResponse, invalidResponse;
+describe('Discover - Movie - Pagination test', () => {
+  describe('with valid query', () => {
+    describe.each(paginationSuccessfulTestCases)('$description', (data) => {
+      let discoverMovies;
+      let body;
 
-  beforeAll(async () => {
-    const [validCase, invalidCase] = testData.pagination.cases;
+      beforeAll(async () => {
+        discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+        body = await discoverMovies.expectStatus(200).toss();
+      });
 
-    validResponse = await spec().get('/discover/movie').withQueryParams('page', validCase.query.page).expectStatus(validCase.expectedStatus).toss();
+      it(`status code should be ${data.expectedStatus}`, () => {
+        expect(body.statusCode).toBe(data.expectedStatus);
+      });
 
-    invalidResponse = await spec().get('/discover/movie').withQueryParams('page', invalidCase.query.page).expectStatus(invalidCase.expectedStatus).toss();
-  });
+      it('response schema should be correct', () => {
+        discoverMovies.response().to.have.jsonSchema(successfulSchema);
+      });
 
-  describe(testData.pagination.validDescribe, () => {
-    it(testData.pagination.validTest, () => {
-      expect(validResponse.body.page).toBe(testData.pagination.cases[0].expectedPage);
+      it('response body should be correct', () => {
+        expect(body.body.page).toBe(data.expectedPage);
+      });
     });
   });
 
-  describe(testData.pagination.invalidDescribe, () => {
-    it(testData.pagination.invalidTest, () => {
-      expect(invalidResponse.statusCode).toBe(400);
+  describe('with invalid query', () => {
+    describe.each(paginationInvalidTestCases)('$description', (data) => {
+      let discoverMovies;
+      let body;
+
+      beforeAll(async () => {
+        discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+        body = await discoverMovies.expectStatus(400).toss();
+      });
+
+      it(`status code should be ${data.expectedStatus}`, () => {
+        expect(body.statusCode).toBe(data.expectedStatus);
+      });
+
+      it('response body should be correct', () => {
+        expect(body.body).toEqual(data.response);
+      });
     });
   });
 });

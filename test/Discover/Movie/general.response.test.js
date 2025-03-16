@@ -1,26 +1,27 @@
 const { spec } = require('pactum');
-const testData = require('../../../data/Discover/Movie/movie.discover.testData');
+const { generalResponse } = require('../../../data/Discover/Movie/general.response.testData');
+const { successfulSchema } = require('../../../schema/Discover/movie.schema');
 
-describe(testData.general.mainDescribe, () => {
-  let discoverMovie;
-  let response;
+describe('Discover - Movie - General Response test', () => {
+  describe.each(generalResponse)('$description', (data) => {
+    let discoverMovie;
+    let body;
 
-  beforeAll(async () => {
-    discoverMovie = spec().get('/discover/movie');
-    response = await discoverMovie.expectStatus(200).toss();
-  });
-
-  describe(testData.general.successDescribe, () => {
-    it(testData.general.statusCodeTest, () => {
-      expect(response.statusCode).toBe(200);
+    beforeAll(async () => {
+      discoverMovie = spec().get('/discover/movie');
+      body = await discoverMovie.expectStatus(200).toss();
     });
 
-    it(testData.general.schemaValidationTest, () => {
-      discoverMovie.response().to.have.jsonSchema(testData.expectedSchema);
+    it('should return status code 200', () => {
+      expect(body.statusCode).toBe(200);
     });
 
-    it(testData.general.nonEmptyResultsTest, () => {
-      expect(response.body.results.length).toBeGreaterThan(0);
+    it('should return a valid schema', () => {
+      discoverMovie.response().to.have.jsonSchema(successfulSchema);
+    });
+
+    it('should return non-empty results', () => {
+      expect(body.body.results.length).toBeGreaterThan(0);
     });
   });
 });
