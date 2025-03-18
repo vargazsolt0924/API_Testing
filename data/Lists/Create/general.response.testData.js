@@ -1,11 +1,11 @@
 const generalResponse = [
   {
+    description: 'when the request is successful',
     expectedStatus: 201,
-    response: {
-      success: true,
-      status_code: 1,
-      status_message: 'Success.',
-      list_id: 8519347,
+    requestBody: {
+      name: 'My Movie List',
+      description: 'A test list with different content',
+      language: 'en',
     },
   },
 ];
