@@ -13,7 +13,7 @@ describe('Discover - Movie - General Response test', () => {
     });
 
     it('should return status code 200', () => {
-      expect(body.statusCode).toBe(200);
+      expect(body.statusCode).toBe(data.expectedStatus);
     });
 
     it('should return a valid schema', () => {

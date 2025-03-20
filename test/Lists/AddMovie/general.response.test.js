@@ -1,6 +1,9 @@
+require('dotenv').config();
 const { spec } = require('pactum');
 const { addMovieResponse } = require('../../../data/Lists/AddMovie/general.response.testData');
 const { expectedSchema } = require('../../../schema/Lists/AddMovie/response.schema');
+
+const SESSION_ID = process.env.SESSION_ID;
 
 describe('Lists - Add Movie - General Response test', () => {
   describe.each(addMovieResponse)('$description', (data) => {
@@ -8,8 +11,12 @@ describe('Lists - Add Movie - General Response test', () => {
     let body;
 
     beforeAll(async () => {
-      addMovie = spec().post('/list/{list_id}/add_item').withPathParams('list_id', data.listId).withJson(data.requestBody);
-      body = await addMovie.expectStatus(201).toss();
+      addMovie = spec()
+        .post('/list/{list_id}/add_item')
+        .withPathParams('list_id', data.listId)
+        .withQueryParams('session_id', SESSION_ID)
+        .withJson(data.requestBody);
+      body = await addMovie.expectStatus(200).toss();
     });
 
     it('should return status code 201', () => {

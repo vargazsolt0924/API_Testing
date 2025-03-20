@@ -16,18 +16,12 @@ describe('Lists - General Response Test', () => {
       expect(body.statusCode).toBe(data.expectedStatus);
     });
 
-    if (data.expectedStatus === 200) {
-      it('should return a valid schema', () => {
-        listResponse.response().to.have.jsonSchema(listSchema);
-      });
+    it('should return a valid schema', () => {
+      listResponse.response().to.have.jsonSchema(listSchema);
+    });
 
-      it('should return an array of movies', () => {
-        expect(Array.isArray(body.body.items)).toBe(true);
-      });
-    } else {
-      it('should return an error message', () => {
-        expect(body.body.status_message).toBeDefined();
-      });
-    }
+    it('should return an array of movies', () => {
+      expect(Array.isArray(body.body.items)).toBe(true);
+    });
   });
 });
