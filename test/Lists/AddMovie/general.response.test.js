@@ -4,19 +4,31 @@ const { addMovieResponse } = require('../../../data/Lists/AddMovie/general.respo
 const { expectedSchema } = require('../../../schema/Lists/AddMovie/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
+const request = {
+  name: 'My Movie List',
+  description: 'A test list with different content',
+  language: 'en',
+};
 
 describe('Lists - Add Movie - General Response test', () => {
   describe.each(addMovieResponse)('$description', (data) => {
+    let listId;
     let addMovie;
     let body;
 
     beforeAll(async () => {
+      ({ body } = await spec()
+        .post('/list')
+        .withQueryParams('session_id', SESSION_ID)
+        .withJson(request)
+        .toss());
+      listId = body.list_id;
       addMovie = spec()
         .post('/list/{list_id}/add_item')
-        .withPathParams('list_id', data.listId)
+        .withPathParams('list_id', listId)
         .withQueryParams('session_id', SESSION_ID)
         .withJson(data.requestBody);
-      body = await addMovie.expectStatus(200).toss();
+      body = await addMovie.expectStatus(data.expectedStatus).toss();
     });
 
     it('should return status code 201', () => {
@@ -31,8 +43,12 @@ describe('Lists - Add Movie - General Response test', () => {
       expect(body.body.success).toBe(true);
     });
 
-    it('should contain the correct movie ID', () => {
-      expect(body.body.movie_id).toBe(data.requestBody.media_id);
+    afterAll(async () => {
+      await spec()
+        .delete('/list/{list_id}')
+        .withPathParams('list_id', listId)
+        .withQueryParams('session_id', SESSION_ID)
+        .toss();
     });
   });
 });

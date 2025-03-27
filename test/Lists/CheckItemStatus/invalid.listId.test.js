@@ -2,7 +2,7 @@ const { spec } = require('pactum');
 const { errorCases } = require('../../../data/Lists/CheckItemStatus/invalid.listId.testData');
 const { invalidSchema } = require('../../../schema/Lists/CheckItemStatus/invalid.schema');
 
-describe('Check Item Status - Error Cases', () => {
+describe('Lists - Check Item Status - Error Cases', () => {
   describe.each(errorCases)('$description', (data) => {
     let checkItemStatus;
     let body;

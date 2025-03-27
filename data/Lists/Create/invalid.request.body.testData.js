@@ -6,15 +6,14 @@ const invalidRequestBody = [
       name: '',
     },
   },
-  /* {
+  {
     description: 'when the request body has an invalid data type',
     expectedStatus: 400,
     requestBody: {
-      name: 12345,
       description: true,
       language: null,
     },
-  },*/
+  },
 ];
 
 module.exports = { invalidRequestBody };

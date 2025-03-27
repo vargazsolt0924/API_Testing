@@ -2,7 +2,7 @@ const { spec } = require('pactum');
 const { generalResponse } = require('../../../data/Lists/CheckItemStatus/general.response.testData');
 const { expectedSchema } = require('../../../schema/Lists/CheckItemStatus/schema');
 
-describe('Check Item Status - General Response Test', () => {
+describe('Lists - Check Item Status - General Response Test', () => {
   describe.each(generalResponse)('$description', (data) => {
     let checkItemStatus;
     let body;
