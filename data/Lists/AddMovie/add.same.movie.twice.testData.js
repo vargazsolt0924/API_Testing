@@ -1,3 +1,9 @@
+const request = {
+  name: 'Duplicate Movie Test List',
+  description: 'Testing adding the same movie twice',
+  language: 'en',
+};
+
 const addingSameMovieTwiceResponse = [
   {
     description: 'when the same movie is added twice to the list',
@@ -8,4 +14,4 @@ const addingSameMovieTwiceResponse = [
   },
 ];
 
-module.exports = { addingSameMovieTwiceResponse };
+module.exports = { request, addingSameMovieTwiceResponse };

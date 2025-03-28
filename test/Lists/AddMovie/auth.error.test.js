@@ -1,13 +1,12 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { invalidSessionData, invalidApiKeyData } = require('../../../data/Lists/AddMovie/auth.error.testData');
+const {
+  request,
+  invalidSessionData,
+  invalidApiKeyData,
+} = require('../../../data/Lists/AddMovie/auth.error.testData');
 
 const SESSION_ID = process.env.SESSION_ID;
-const request = {
-  name: 'Invalid Authentication Test List',
-  description: 'Testing adding a movie with invalid authentication',
-  language: 'en',
-};
 
 describe('Lists - Add Movie - Invalid Authentication', () => {
   let listId;

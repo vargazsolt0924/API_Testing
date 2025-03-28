@@ -1,14 +1,9 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { addMovieResponse } = require('../../../data/Lists/AddMovie/general.response.testData');
+const { request, addMovieResponse } = require('../../../data/Lists/AddMovie/general.response.testData');
 const { expectedSchema } = require('../../../schema/Lists/AddMovie/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
-const request = {
-  name: 'My Movie List',
-  description: 'A test list with different content',
-  language: 'en',
-};
 
 describe('Lists - Add Movie - General Response test', () => {
   describe.each(addMovieResponse)('$description', (data) => {

@@ -1,3 +1,9 @@
+const request = {
+  name: 'My Movie List',
+  description: 'A test list with different content',
+  language: 'en',
+};
+
 const addMovieResponse = [
   {
     description: 'when the movie is successfully added to the list',
@@ -8,4 +14,4 @@ const addMovieResponse = [
   },
 ];
 
-module.exports = { addMovieResponse };
+module.exports = { request, addMovieResponse };

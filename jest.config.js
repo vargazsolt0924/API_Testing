@@ -1,8 +1,8 @@
 const config = {
   testMatch: [
-    //'**/test/Discover/**/*.test.js',
-    //'**/test/Lists/**/*.test.js',
-    '**/test/Lists/RemoveMovie/general.response.test.js',
+    '**/test/Discover/**/*.test.js',
+    '**/test/Lists/**/*.test.js',
+    //'**/test/Lists/AddMovie/invalid.request.body.test.js',
   ],
   /* testPathIgnorePatterns: [
     '/test/Lists/AddMovie/', // AddMovie-mappában lévő teszteket nem futtatja

@@ -1,3 +1,9 @@
+const request = {
+  name: 'Invalid Request Body Test List',
+  description: 'Testing adding a movie with invalid requestBody',
+  language: 'en',
+};
+
 const invalidRequestBodyResponse = [
   {
     description: 'when the request body is invalid',
@@ -8,4 +14,4 @@ const invalidRequestBodyResponse = [
   },
 ];
 
-module.exports = { invalidRequestBodyResponse };
+module.exports = { request, invalidRequestBodyResponse };

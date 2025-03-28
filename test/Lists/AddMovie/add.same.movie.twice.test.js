@@ -1,14 +1,12 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { addingSameMovieTwiceResponse } = require('../../../data/Lists/AddMovie/add.same.movie.twice.testData');
+const {
+  request,
+  addingSameMovieTwiceResponse,
+} = require('../../../data/Lists/AddMovie/add.same.movie.twice.testData');
 const { expectedSchema } = require('../../../schema/Lists/AddMovie/invalid.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
-const request = {
-  name: 'Duplicate Movie Test List',
-  description: 'Testing adding the same movie twice',
-  language: 'en',
-};
 
 describe('Lists - Add Movie - Adding the Same Movie Twice', () => {
   describe.each(addingSameMovieTwiceResponse)('$description', (data) => {

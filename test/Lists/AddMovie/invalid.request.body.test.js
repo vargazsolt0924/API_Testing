@@ -1,14 +1,12 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { invalidRequestBodyResponse } = require('../../../data/Lists/AddMovie/invalid.request.body.testData');
+const {
+  request,
+  invalidRequestBodyResponse,
+} = require('../../../data/Lists/AddMovie/invalid.request.body.testData');
 const { expectedSchema } = require('../../../schema/Lists/AddMovie/invalid.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
-const request = {
-  name: 'Invalid Request Body Test List',
-  description: 'Testing adding a movie with invalid requestBody',
-  language: 'en',
-};
 
 describe('Lists - Add Movie - Invalid Request Body', () => {
   describe.each(invalidRequestBodyResponse)('$description', (data) => {
