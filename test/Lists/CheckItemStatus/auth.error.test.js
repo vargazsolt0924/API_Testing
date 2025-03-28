@@ -1,11 +1,11 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { request, invalidApiKeyData } = require('../../../data/Lists/Details/auth.error.testData');
-const { errorSchema } = require('../../../schema/Lists/Details/auth.error.schema');
+const { request, invalidApiKeyData } = require('../../../data/Lists/CheckItemStatus/auth.error.testData');
+const { errorSchema } = require('../../../schema/Lists/CheckItemStatus/auth.error.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Details - Invalid Authentication', () => {
+describe('Lists - Check Item Status - Invalid Authentication', () => {
   let createMovie;
   let listId;
 

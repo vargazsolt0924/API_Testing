@@ -1,9 +1,14 @@
+const request = {
+  name: 'Test List',
+  description: 'A test list for validation',
+  language: 'en',
+};
+
 const generalResponse = [
   {
     description: 'when the request is successful',
     expectedStatus: 200,
-    listId: 123456,
   },
 ];
 
-module.exports = { generalResponse };
+module.exports = { request, generalResponse };

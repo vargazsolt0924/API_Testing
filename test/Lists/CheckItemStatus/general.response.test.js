@@ -1,27 +1,40 @@
+require('dotenv').config();
 const { spec } = require('pactum');
-const { generalResponse } = require('../../../data/Lists/CheckItemStatus/general.response.testData');
+const { request, generalResponse } = require('../../../data/Lists/CheckItemStatus/general.response.testData');
 const { expectedSchema } = require('../../../schema/Lists/CheckItemStatus/schema');
+
+const SESSION_ID = process.env.SESSION_ID;
 
 describe('Lists - Check Item Status - General Response Test', () => {
   describe.each(generalResponse)('$description', (data) => {
+    let listId;
     let checkItemStatus;
-    let body;
+    let checkItemStatusBody;
 
     beforeAll(async () => {
-      checkItemStatus = spec().get('/list/{list_id}/item_status').withPathParams('list_id', data.listId);
-      body = await checkItemStatus.expectStatus(data.expectedStatus).toss();
+      const createListResponse = await spec()
+        .post('/list')
+        .withQueryParams('session_id', SESSION_ID)
+        .withJson(request)
+        .expectStatus(201)
+        .toss();
+
+      listId = createListResponse.body.list_id;
+      checkItemStatus = spec().get(`/list/${listId}/item_status`).withQueryParams('session_id', SESSION_ID);
+      checkItemStatusBody = await checkItemStatus.expectStatus(data.expectedStatus).toss();
     });
 
     it(`should return status code ${data.expectedStatus}`, () => {
-      expect(body.statusCode).toBe(data.expectedStatus);
+      expect(checkItemStatusBody.statusCode).toBe(data.expectedStatus);
+      expect(checkItemStatusBody.body).toHaveProperty('item_present');
     });
 
-    it('should return a valid schema', () => {
+    it('should return the valid schema', () => {
       checkItemStatus.response().to.have.jsonSchema(expectedSchema);
     });
 
-    it('should return a valid response body', () => {
-      expect(body.body).toHaveProperty('item_present');
+    afterAll(async () => {
+      await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID).toss();
     });
   });
 });

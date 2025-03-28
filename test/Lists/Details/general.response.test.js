@@ -1,36 +1,40 @@
+require('dotenv').config();
 const { spec } = require('pactum');
-const { generalResponse } = require('../../../data/Lists/Details/general.response.testData');
+const { request, generalResponse } = require('../../../data/Lists/Details/general.response.testData');
 const { detailsSchema } = require('../../../schema/Lists/Details/schema');
 
-describe('Details - General Response Test', () => {
+const SESSION_ID = process.env.SESSION_ID;
+
+describe('Lists - Details - General Response Test', () => {
   describe.each(generalResponse)('$description', (data) => {
-    let detailsResponse;
-    let body;
+    let createList;
+    let listId;
+    let response;
+    let responseBody;
 
     beforeAll(async () => {
-      detailsResponse = spec().get('/movie/{id}').withPathParams('id', data.id);
-      body = await detailsResponse.expectStatus(data.expectedStatus).toss();
+      createList = await spec()
+        .post('/list')
+        .withQueryParams('session_id', SESSION_ID)
+        .withJson(request)
+        .toss();
+
+      listId = createList.body.list_id;
+
+      response = spec().get(`/list/${listId}`).withQueryParams('session_id', SESSION_ID);
+      responseBody = await response.expectStatus(data.expectedStatus).toss();
     });
 
     it('should return status code 200', () => {
-      expect(body.statusCode).toBe(data.expectedStatus);
+      expect(responseBody.statusCode).toBe(data.expectedStatus);
     });
 
     it('should return a valid schema', () => {
-      detailsResponse.response().to.have.jsonSchema(detailsSchema);
+      response.response().to.have.jsonSchema(detailsSchema);
     });
 
-    it('should return a non-empty title', () => {
-      expect(body.body.title).not.toBe('');
-    });
-
-    it('should return an array of genres', () => {
-      expect(Array.isArray(body.body.genres)).toBe(true);
-      expect(body.body.genres.length).toBeGreaterThan(0);
-    });
-
-    it('should have a valid release date', () => {
-      expect(body.body.release_date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    afterAll(async () => {
+      await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID).toss();
     });
   });
 });

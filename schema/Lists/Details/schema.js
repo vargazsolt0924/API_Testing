@@ -1,29 +1,36 @@
 const detailsSchema = {
   type: 'object',
   properties: {
+    created_by: { type: 'string' },
+    description: { type: 'string' },
+    favorite_count: { type: 'integer' },
     id: { type: 'integer' },
-    title: { type: 'string' },
-    original_title: { type: 'string' },
-    overview: { type: 'string' },
-    genres: {
+    iso_639_1: { type: 'string' },
+    item_count: { type: 'integer' },
+    items: {
       type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'integer' },
-          name: { type: 'string' },
-        },
-        required: ['id', 'name'],
-      },
+      items: { type: 'object' },
     },
-    release_date: { type: 'string', format: 'date' },
-    popularity: { type: 'number' },
-    vote_average: { type: 'number' },
-    vote_count: { type: 'integer' },
-    runtime: { type: 'integer' },
-    status: { type: 'string' },
+    name: { type: 'string' },
+    page: { type: 'integer' },
+    poster_path: { type: ['string', 'null'] },
+    total_pages: { type: 'integer' },
+    total_results: { type: 'integer' },
   },
-  required: ['id', 'title', 'original_title', 'overview', 'genres', 'release_date', 'popularity', 'vote_average', 'vote_count', 'runtime', 'status'],
+  required: [
+    'created_by',
+    'description',
+    'favorite_count',
+    'id',
+    'iso_639_1',
+    'item_count',
+    'items',
+    'name',
+    'page',
+    'poster_path',
+    'total_pages',
+    'total_results',
+  ],
 };
 
 module.exports = { detailsSchema };
