@@ -1,5 +1,5 @@
 const { spec } = require('pactum');
-const { filterCases } = require('../../../data/Discover/Movie/filtering.testData');
+const {filterCases} = require('../../../data/Discover/Movie/filtering.testData');
 
 describe('Discover - Movie - Filtering test', () => {
   describe.each(filterCases)('$description', (data) => {
@@ -7,7 +7,9 @@ describe('Discover - Movie - Filtering test', () => {
     let body;
 
     beforeAll(async () => {
-      discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+      discoverMovies = spec()
+        .get('/discover/movie')
+        .withQueryParams(data.query);
       body = await discoverMovies.expectStatus(200).toss();
     });
 

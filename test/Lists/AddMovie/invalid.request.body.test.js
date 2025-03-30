@@ -1,10 +1,7 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const {
-  request,
-  invalidRequestBodyResponse,
-} = require('../../../data/Lists/AddMovie/invalid.request.body.testData');
-const { expectedSchema } = require('../../../schema/Lists/AddMovie/invalid.schema');
+const {request,invalidRequestBodyResponse} = require('../../../data/Lists/AddMovie/invalid.request.body.testData');
+const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 

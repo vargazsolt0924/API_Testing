@@ -12,7 +12,9 @@ export default [
     plugins: {
       prettier: prettier,
     },
+    extends: ['eslint:recommended', 'plugin:prettier/recommended'],
     rules: {
+      'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       quotes: ['error', 'single'],
       'prettier/prettier': 'error',
       'object-curly-newline': [
@@ -20,11 +22,11 @@ export default [
         {
           ObjectExpression: { multiline: true, minProperties: 1 },
           ObjectPattern: { multiline: true, minProperties: 1 },
-          ImportDeclaration: { multiline: true, minProperties: 1 },
-          ExportDeclaration: { multiline: true, minProperties: 1 },
+          ImportDeclaration: 'never',
+          ExportDeclaration: 'never',
         },
       ],
-      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
+      'object-property-newline': ['error'],
       'array-element-newline': ['error', 'consistent'],
     },
   },

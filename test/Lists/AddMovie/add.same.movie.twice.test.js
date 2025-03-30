@@ -1,10 +1,7 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const {
-  request,
-  addingSameMovieTwiceResponse,
-} = require('../../../data/Lists/AddMovie/add.same.movie.twice.testData');
-const { expectedSchema } = require('../../../schema/Lists/AddMovie/invalid.schema');
+const { request, addingSameMovieTwiceResponse } = require('../../../data/Lists/AddMovie/add.same.movie.twice.testData');
+const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
@@ -16,23 +13,19 @@ describe('Lists - Add Movie - Adding the Same Movie Twice', () => {
 
     beforeAll(async () => {
       ({ body } = await spec()
-        .post('/list')
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson(request)
-        .toss());
+      .post('/list')
+      .withQueryParams('session_id', SESSION_ID)
+      .withJson(request)
+      .toss());
       listId = body.list_id;
 
       await spec()
-        .post(`/list/${listId}/add_item`)
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson(data.requestBody)
-        .toss();
+      .post(`/list/${listId}/add_item`)
+      .withQueryParams('session_id', SESSION_ID)
+      .withJson(data.requestBody)
+      .toss();
 
-      addMovie = spec()
-        .post(`/list/{list_id}/add_item`)
-        .withPathParams('list_id', listId)
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson(data.requestBody);
+      addMovie = spec().post(`/list/{list_id}/add_item`).withPathParams('list_id', listId).withQueryParams('session_id', SESSION_ID).withJson(data.requestBody);
       body = await addMovie.expectStatus(data.expectedStatus).toss();
     });
 
@@ -53,11 +46,7 @@ describe('Lists - Add Movie - Adding the Same Movie Twice', () => {
     });
 
     afterAll(async () => {
-      await spec()
-        .delete(`/list/{list_id}`)
-        .withPathParams('list_id', listId)
-        .withQueryParams('session_id', SESSION_ID)
-        .toss();
+      await spec().delete(`/list/{list_id}`).withPathParams('list_id', listId).withQueryParams('session_id', SESSION_ID).toss();
     });
   });
 });

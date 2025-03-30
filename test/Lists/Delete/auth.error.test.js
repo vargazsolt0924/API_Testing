@@ -1,32 +1,31 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const {request,invalidSessionData,invalidApiKeyData,} = require('../../../data/Lists/AddMovie/auth.error.testData');
-const {expectedSchema} = require('../../../schema/Lists/AddMovie/error.schema')
+const { request, invalidSessionData, invalidApiKeyData } = require('../../../data/Lists/Delete/auth.error.testData');
+const { expectedErrorSchema } = require('../../../schema/Lists/Delete/error.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid Authentication', () => {
+describe('Lists - Remove Movie - With invalid authentication', () => {
   let listId;
 
   beforeAll(async () => {
-    const response = await spec()
+    const { body } = await spec()
       .post('/list')
       .withQueryParams('session_id', SESSION_ID)
       .withJson(request)
       .toss();
-    listId = response.body.list_id;
+    listId = body.list_id;
   });
 
   describe.each(invalidSessionData)('$description', (sessionData) => {
-    let addMovie;
+    let deleteList;
     let body;
     it(`should return 401 when using an invalid session ID: ${sessionData.sessionId}`, async () => {
-      addMovie = spec()
-        .post(`/list/${listId}/add_item`)
-        .withQueryParams('session_id', sessionData.sessionId)
-        .withJson({ media_id: 550 });
+      deleteList = spec()
+        .delete(`/list/${listId}`)
+        .withQueryParams('session_id', sessionData.sessionId);
 
-      body = await addMovie.expectStatus(sessionData.expectedStatus).toss();
+      body = await deleteList.expectStatus(sessionData.expectedStatus).toss();
     });
 
     it('should return the right error message', () => {
@@ -34,21 +33,20 @@ describe('Lists - Add Movie - Invalid Authentication', () => {
     });
 
     it('should return the error schema', ()=>{
-      addMovie.response().to.have.jsonSchema(expectedSchema);
+        deleteList.response().to.have.jsonSchema(expectedErrorSchema);
     });
   });
 
   describe.each(invalidApiKeyData)('$description', (apiKeyData) => {
-    let addMovie;
+    let deleteList;
     let body;
     it(`should return 401 when using an invalid API key: ${apiKeyData.apiKey}`, async () => {
-      addMovie = spec()
-        .post(`/list/${listId}/add_item`)
+      deleteList = spec()
+        .delete(`/list/${listId}`)
         .withHeaders('Authorization', apiKeyData.apiKey)
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson({ media_id: 550 });
+        .withQueryParams('session_id', SESSION_ID);
 
-      body = await addMovie.expectStatus(apiKeyData.expectedStatus).toss();
+      body = await deleteList.expectStatus(apiKeyData.expectedStatus).toss();
     });
 
     it('should return the right error message', () => {
@@ -56,7 +54,7 @@ describe('Lists - Add Movie - Invalid Authentication', () => {
     });
 
     it('should return the error schema', ()=>{
-      addMovie.response().to.have.jsonSchema(expectedSchema);
+        deleteList.response().to.have.jsonSchema(expectedErrorSchema);
     });
   });
 

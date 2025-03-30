@@ -1,18 +1,18 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { listIdTestData } = require('../../../data/Lists/AddMovie/invalid.list.id.testData');
-const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema');
+const { listIdTestData } = require('../../../data/Lists/RemoveMovie/invalid.list.id.testData');
+const { expectedErrorSchema } = require('../../../schema/Lists/RemoveMovie/error.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid or Non-Existing List ID', () => {
+describe('Lists - Remove Movie - Invalid or Non-Existing List ID', () => {
   describe.each(listIdTestData)('$description', (data) => {
     let response;
     let body;
 
     beforeAll(async () => {
       response = spec()
-        .post(`/list/${data.listId}/add_item`)
+        .post(`/list/${data.listId}/remove_item`)
         .withQueryParams('session_id', SESSION_ID)
         .withJson(data.requestBody);
       body = await response.expectStatus(data.expectedStatus);
@@ -27,7 +27,7 @@ describe('Lists - Add Movie - Invalid or Non-Existing List ID', () => {
     });
 
     it('should return a valid schema', () => {
-      response.response().to.have.jsonSchema(expectedSchema);
+      response.response().to.have.jsonSchema(expectedErrorSchema);
     });
   });
 });

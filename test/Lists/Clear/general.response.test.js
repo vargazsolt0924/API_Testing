@@ -1,11 +1,11 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { request, moviesToAdd, removeMovie,} = require('../../../data/Lists/RemoveMovie/general.response.testData');
-const { expectedSchema } = require('../../../schema/Lists/RemoveMovie/response.schema');
+const { request, moviesToAdd, clearList} = require('../../../data/Lists/Clear/general.response.testData');
+const { expectedSchema } = require('../../../schema/Lists/Clear/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add and Remove Movie - Removing Movie from the List', () => {
+describe('Lists - Remove Movie - Removing a non-existing movie', () => {
   let listId;
 
   beforeAll(async () => {
@@ -14,6 +14,7 @@ describe('Lists - Add and Remove Movie - Removing Movie from the List', () => {
       .withQueryParams('session_id', SESSION_ID)
       .withJson(request)
       .toss();
+
     listId = body.list_id;
 
     for (const movie of moviesToAdd) {
@@ -25,25 +26,24 @@ describe('Lists - Add and Remove Movie - Removing Movie from the List', () => {
     }
   });
 
-  describe.each(removeMovie)('$description', (movieData) => {
-    let removeMovie;
+  describe.each(clearList)('$description', (movieData) => {
+    let clearList;
     let body;
 
     beforeAll(async () => {
-      removeMovie = spec()
-        .post(`/list/${listId}/remove_item`)
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson({ media_id: movieData.media_id });
+     clearList = spec()
+        .post(`/list/${listId}/clear`)
+        .withQueryParams({session_id: SESSION_ID,  confirm: true});
 
-      body = await removeMovie.expectStatus(200).toss();
+      body = await clearList.expectStatus(201).toss();
     });
 
-    it('should return the expected status code for movie removal', () => {
-      expect(body.statusCode).toBe(200);
+    it('should return the expected status code for list clear', () => {
+      expect(body.statusCode).toBe(201);
     });
 
-    it('should return a valid schema for the removal', () => {
-      removeMovie.response().to.have.jsonSchema(expectedSchema);
+    it('should return a valid schema', () => {
+      clearList.response().to.have.jsonSchema(expectedSchema);
     });
 
     it(`should return the expected response body status code: ${movieData.status_code}`, () => {

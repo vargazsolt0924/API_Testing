@@ -37,6 +37,6 @@ describe('Lists - Check Item Status - Invalid Authentication', () => {
   });
 
   afterAll(async () => {
-    await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID).toss();
+    await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID);
   });
 });

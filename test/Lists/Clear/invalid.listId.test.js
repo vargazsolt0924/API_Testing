@@ -1,20 +1,19 @@
 require('dotenv').config();
 const { spec } = require('pactum');
-const { listIdTestData } = require('../../../data/Lists/AddMovie/invalid.list.id.testData');
-const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema');
+const { listIdTestData } = require('../../../data/Lists/Clear/invalid.listId.testData');
+const { expectedSchema } = require('../../../schema/Lists/Clear/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid or Non-Existing List ID', () => {
+describe('Lists - Clear List - Invalid or Non-Existing List ID', () => {
   describe.each(listIdTestData)('$description', (data) => {
     let response;
     let body;
 
     beforeAll(async () => {
       response = spec()
-        .post(`/list/${data.listId}/add_item`)
-        .withQueryParams('session_id', SESSION_ID)
-        .withJson(data.requestBody);
+        .post(`/list/${data.listId}/clear`)
+        .withQueryParams({ session_id: SESSION_ID, confirm: true })
       body = await response.expectStatus(data.expectedStatus);
     });
 
