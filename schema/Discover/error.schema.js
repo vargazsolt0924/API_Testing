@@ -1,4 +1,4 @@
-const invalidSchema = {
+const errorSchema = {
   type: 'object',
   properties: {
     success: { type: 'boolean' },
@@ -8,4 +8,4 @@ const invalidSchema = {
   required: ['success', 'status_code', 'status_message'],
 };
 
-module.exports = { invalidSchema };
+module.exports = { errorSchema };

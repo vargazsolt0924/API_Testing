@@ -5,7 +5,7 @@ const { expectedSchema } = require('../../../schema/Lists/Delete/response.schema
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Delete - Test', () => {
+describe('Lists - Delete - General Response test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -14,6 +14,7 @@ describe('Lists - Delete - Test', () => {
       .withQueryParams('session_id', SESSION_ID)
       .withJson(request)
       .toss();
+      
     listId = body.list_id;
   });
 

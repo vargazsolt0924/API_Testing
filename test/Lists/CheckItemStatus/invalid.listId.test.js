@@ -1,14 +1,17 @@
 const { spec } = require('pactum');
 const { errorCases } = require('../../../data/Lists/CheckItemStatus/invalid.listId.testData');
-const { invalidSchema } = require('../../../schema/Lists/CheckItemStatus/invalid.schema');
+const { invalidSchema } = require('../../../schema/Lists/CheckItemStatus/error.schema');
 
-describe('Lists - Check Item Status - Error Cases', () => {
+describe('Lists - Check Item Status - Invalid or Non-Existing List ID test', () => {
   describe.each(errorCases)('$description', (data) => {
     let checkItemStatus;
     let body;
 
     beforeAll(async () => {
-      checkItemStatus = spec().get('/list/{list_id}/item_status').withPathParams('list_id', data.listId);
+      checkItemStatus = spec()
+        .get('/list/{list_id}/item_status')
+        .withPathParams('list_id', data.listId);
+        
       body = await checkItemStatus.expectStatus(data.expectedStatus).toss();
     });
 

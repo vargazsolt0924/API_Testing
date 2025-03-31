@@ -8,7 +8,10 @@ describe('Lists - Create - General Response test', () => {
     let body;
 
     beforeAll(async () => {
-      createList = spec().post('/list').withJson(data.requestBody);
+      createList = spec()
+        .post('/list')
+        .withJson(data.requestBody);
+        
       body = await createList.expectStatus(201).toss();
     });
 

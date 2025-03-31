@@ -1,11 +1,11 @@
 require('dotenv').config();
 const { spec } = require('pactum');
 const { request, generalResponse } = require('../../../data/Lists/CheckItemStatus/general.response.testData');
-const { expectedSchema } = require('../../../schema/Lists/CheckItemStatus/schema');
+const { expectedSchema } = require('../../../schema/Lists/CheckItemStatus/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Check Item Status - General Response Test', () => {
+describe('Lists - Check Item Status - General Response test', () => {
   describe.each(generalResponse)('$description', (data) => {
     let listId;
     let checkItemStatus;
@@ -20,7 +20,11 @@ describe('Lists - Check Item Status - General Response Test', () => {
         .toss();
 
       listId = createListResponse.body.list_id;
-      checkItemStatus = spec().get(`/list/${listId}/item_status`).withQueryParams('session_id', SESSION_ID);
+
+      checkItemStatus = spec()
+        .get(`/list/${listId}/item_status`)
+        .withQueryParams('session_id', SESSION_ID);
+
       checkItemStatusBody = await checkItemStatus.expectStatus(data.expectedStatus).toss();
     });
 
@@ -34,7 +38,9 @@ describe('Lists - Check Item Status - General Response Test', () => {
     });
 
     afterAll(async () => {
-      await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID).toss();
+      await spec()
+        .delete(`/list/${listId}`)
+        .withQueryParams('session_id', SESSION_ID);
     });
   });
 });

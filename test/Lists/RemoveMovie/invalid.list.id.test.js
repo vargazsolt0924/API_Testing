@@ -15,6 +15,7 @@ describe('Lists - Remove Movie - Invalid or Non-Existing List ID', () => {
         .post(`/list/${data.listId}/remove_item`)
         .withQueryParams('session_id', SESSION_ID)
         .withJson(data.requestBody);
+        
       body = await response.expectStatus(data.expectedStatus);
     });
 

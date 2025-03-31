@@ -5,7 +5,7 @@ const { expectedSchema } = require('../../../schema/Lists/Delete/response.schema
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Delete - Test', () => {
+describe('Lists - Delete - Invalid or Non-Existing List ID test', () => {
   describe.each(listIdTestData)('$description', (data) => {
     let deleteList;
     let body;

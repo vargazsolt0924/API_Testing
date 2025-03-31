@@ -8,7 +8,10 @@ describe('Lists - Create - Invalid Request Body test', () => {
     let body;
 
     beforeAll(async () => {
-      createList = spec().post('/list').withJson(data.requestBody);
+      createList = spec()
+        .post('/list')
+        .withJson(data.requestBody);
+
       body = await createList.expectStatus(400).toss();
     });
 
@@ -20,9 +23,8 @@ describe('Lists - Create - Invalid Request Body test', () => {
       createList.response().to.have.jsonSchema(errorSchema);
     });
 
-    it('should return an error message', () => {
-      expect(body.body.success).toBe(false);
-      expect(body.body.status_message).toBeDefined();
+    it('should return the right error message', () => {
+      expect(body.body.status_message).toEqual(data.expectedMessage);
     });
   });
 });

@@ -5,7 +5,7 @@ const {expectedSchema} = require('../../../schema/Lists/AddMovie/error.schema')
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid Authentication', () => {
+describe('Lists - Add Movie - Authentication test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -14,12 +14,14 @@ describe('Lists - Add Movie - Invalid Authentication', () => {
       .withQueryParams('session_id', SESSION_ID)
       .withJson(request)
       .toss();
+
     listId = response.body.list_id;
   });
 
   describe.each(invalidSessionData)('$description', (sessionData) => {
     let addMovie;
     let body;
+
     it(`should return 401 when using an invalid session ID: ${sessionData.sessionId}`, async () => {
       addMovie = spec()
         .post(`/list/${listId}/add_item`)
@@ -33,7 +35,7 @@ describe('Lists - Add Movie - Invalid Authentication', () => {
       expect(body.body.status_message).toBe(sessionData.expectedMessage);
     });
 
-    it('should return the error schema', ()=>{
+    it('should return the error schema', () => {
       addMovie.response().to.have.jsonSchema(expectedSchema);
     });
   });
@@ -41,6 +43,7 @@ describe('Lists - Add Movie - Invalid Authentication', () => {
   describe.each(invalidApiKeyData)('$description', (apiKeyData) => {
     let addMovie;
     let body;
+    
     it(`should return 401 when using an invalid API key: ${apiKeyData.apiKey}`, async () => {
       addMovie = spec()
         .post(`/list/${listId}/add_item`)

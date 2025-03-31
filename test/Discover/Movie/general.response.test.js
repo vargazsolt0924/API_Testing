@@ -8,7 +8,9 @@ describe('Discover - Movie - General Response test', () => {
     let body;
 
     beforeAll(async () => {
-      discoverMovie = spec().get('/discover/movie');
+      discoverMovie = spec()
+        .get('/discover/movie');
+        
       body = await discoverMovie.expectStatus(200).toss();
     });
 

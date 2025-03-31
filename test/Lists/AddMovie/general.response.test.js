@@ -17,12 +17,15 @@ describe('Lists - Add Movie - General Response test', () => {
         .withQueryParams('session_id', SESSION_ID)
         .withJson(request)
         .toss());
+
       listId = body.list_id;
+
       addMovie = spec()
         .post('/list/{list_id}/add_item')
         .withPathParams('list_id', listId)
         .withQueryParams('session_id', SESSION_ID)
         .withJson(data.requestBody);
+        
       body = await addMovie.expectStatus(data.expectedStatus).toss();
     });
 
@@ -41,9 +44,7 @@ describe('Lists - Add Movie - General Response test', () => {
     afterAll(async () => {
       await spec()
         .delete('/list/{list_id}')
-        .withPathParams('list_id', listId)
-        .withQueryParams('session_id', SESSION_ID)
-        .toss();
+        .withQueryParams('session_id', SESSION_ID);
     });
   });
 });

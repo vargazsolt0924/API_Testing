@@ -9,7 +9,10 @@ describe('Discover - Movie - Pagination test', () => {
       let body;
 
       beforeAll(async () => {
-        discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+        discoverMovies = spec()
+          .get('/discover/movie')
+          .withQueryParams(data.query);
+
         body = await discoverMovies.expectStatus(200).toss();
       });
 
@@ -33,7 +36,10 @@ describe('Discover - Movie - Pagination test', () => {
       let body;
 
       beforeAll(async () => {
-        discoverMovies = spec().get('/discover/movie').withQueryParams(data.query);
+        discoverMovies = spec()
+          .get('/discover/movie')
+          .withQueryParams(data.query);
+
         body = await discoverMovies.expectStatus(400).toss();
       });
 

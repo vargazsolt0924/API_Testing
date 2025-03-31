@@ -5,7 +5,7 @@ const { expectedErrorSchema } = require('../../../schema/Lists/Clear/error.schem
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Clear List - With invalid authentication', () => {
+describe('Lists - Clear List -Authentication test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -28,6 +28,7 @@ describe('Lists - Clear List - With invalid authentication', () => {
   describe.each(invalidSessionData)('$description', (sessionData) => {
     let clearList;
     let body;
+
     it(`should return 401 when using an invalid session ID: ${sessionData.sessionId}`, async () => {
       clearList = spec()
         .post(`/list/${listId}/remove_item`)
@@ -48,6 +49,7 @@ describe('Lists - Clear List - With invalid authentication', () => {
   describe.each(invalidApiKeyData)('$description', (apiKeyData) => {
     let clearList;
     let body;
+
     it(`should return 401 when using an invalid API key: ${apiKeyData.apiKey}`, async () => {
       clearList = spec()
         .post(`/list/${listId}/remove_item`)

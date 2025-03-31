@@ -1,11 +1,11 @@
 require('dotenv').config();
 const { spec } = require('pactum');
 const { request, generalResponse } = require('../../../data/Lists/Details/general.response.testData');
-const { detailsSchema } = require('../../../schema/Lists/Details/schema');
+const { detailsSchema } = require('../../../schema/Lists/Details/response.schema');
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Details - General Response Test', () => {
+describe('Lists - Details - General Response test', () => {
   describe.each(generalResponse)('$description', (data) => {
     let createList;
     let listId;
@@ -21,7 +21,10 @@ describe('Lists - Details - General Response Test', () => {
 
       listId = createList.body.list_id;
 
-      response = spec().get(`/list/${listId}`).withQueryParams('session_id', SESSION_ID);
+      response = spec()
+        .get(`/list/${listId}`)
+        .withQueryParams('session_id', SESSION_ID);
+
       responseBody = await response.expectStatus(data.expectedStatus).toss();
     });
 
@@ -34,7 +37,9 @@ describe('Lists - Details - General Response Test', () => {
     });
 
     afterAll(async () => {
-      await spec().delete(`/list/${listId}`).withQueryParams('session_id', SESSION_ID).toss();
+      await spec()
+        .delete(`/list/${listId}`)
+        .withQueryParams('session_id', SESSION_ID);
     });
   });
 });

@@ -21,8 +21,7 @@ describe('Lists - Clear - Missing or invalid confirm query param test', () => {
       await spec()
         .post(`/list/${listId}/add_item`)
         .withQueryParams('session_id', SESSION_ID)
-        .withJson({ media_id: movie.media_id })
-        .toss();
+        .withJson({ media_id: movie.media_id });
     }
   });
 
@@ -58,7 +57,6 @@ describe('Lists - Clear - Missing or invalid confirm query param test', () => {
   afterAll(async () => {
     await spec()
       .delete(`/list/${listId}`)
-      .withQueryParams('session_id', SESSION_ID)
-      .toss();
+      .withQueryParams('session_id', SESSION_ID);
   });
 });

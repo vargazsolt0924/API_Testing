@@ -5,7 +5,7 @@ const { expectedSchema } = require('../../../schema/Lists/Clear/response.schema'
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Remove Movie - Removing a non-existing movie', () => {
+describe('Lists - Remove Movie - Removing a non-existing movie test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -58,7 +58,6 @@ describe('Lists - Remove Movie - Removing a non-existing movie', () => {
   afterAll(async () => {
     await spec()
       .delete(`/list/${listId}`)
-      .withQueryParams('session_id', SESSION_ID)
-      .toss();
+      .withQueryParams('session_id', SESSION_ID);
   });
 });

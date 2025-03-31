@@ -5,7 +5,7 @@ const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema'
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid or Non-Existing List ID', () => {
+describe('Lists - Add Movie - Invalid or Non-Existing List ID test', () => {
   describe.each(listIdTestData)('$description', (data) => {
     let response;
     let body;

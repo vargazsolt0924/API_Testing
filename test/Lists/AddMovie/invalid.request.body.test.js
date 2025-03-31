@@ -5,23 +5,26 @@ const { expectedSchema } = require('../../../schema/Lists/AddMovie/error.schema'
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Add Movie - Invalid Request Body', () => {
-  describe.each(invalidRequestBodyResponse)('$description', (data) => {
-    let listId;
-    let addMovie;
-    let body;
+describe('Lists - Add Movie - Invalid Request Body test', () => {
+  let listId;
+  let addMovie;
+  let body;
 
+  describe.each(invalidRequestBodyResponse)('$description', (data) => {
     beforeAll(async () => {
       ({ body } = await spec()
         .post('/list')
         .withQueryParams('session_id', SESSION_ID)
         .withJson(request)
         .toss());
+
       listId = body.list_id;
+
       addMovie = spec()
         .post(`/list/${listId}/add_item`)
         .withQueryParams('session_id', SESSION_ID)
         .withJson(data.requestBody);
+
       body = await addMovie.expectStatus(data.expectedStatus).toss();
     });
 
@@ -41,4 +44,10 @@ describe('Lists - Add Movie - Invalid Request Body', () => {
       addMovie.response().to.have.jsonSchema(expectedSchema);
     });
   });
+
+  afterAll(async () => {
+        await spec()
+          .delete(`/list/{list_id}`)
+          .withQueryParams('session_id', SESSION_ID);
+      });
 });

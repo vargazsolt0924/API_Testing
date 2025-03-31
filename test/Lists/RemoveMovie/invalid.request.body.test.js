@@ -5,7 +5,7 @@ const { expectedErrorSchema } = require('../../../schema/Lists/RemoveMovie/error
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Remove Movie - Invalid Request Body Test', () => {
+describe('Lists - Remove Movie - Invalid Request Body test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -49,10 +49,8 @@ describe('Lists - Remove Movie - Invalid Request Body Test', () => {
   });
 
   afterAll(async () => {
-    // Lista törlése a teszt végén
     await spec()
       .delete(`/list/${listId}`)
-      .withQueryParams('session_id', SESSION_ID)
-      .toss();
+      .withQueryParams('session_id', SESSION_ID);
   });
 });

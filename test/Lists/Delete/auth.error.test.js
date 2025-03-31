@@ -5,7 +5,7 @@ const { expectedErrorSchema } = require('../../../schema/Lists/Delete/error.sche
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Remove Movie - With invalid authentication', () => {
+describe('Lists - Delete List - Authentication test', () => {
   let listId;
 
   beforeAll(async () => {
@@ -14,12 +14,14 @@ describe('Lists - Remove Movie - With invalid authentication', () => {
       .withQueryParams('session_id', SESSION_ID)
       .withJson(request)
       .toss();
+
     listId = body.list_id;
   });
 
   describe.each(invalidSessionData)('$description', (sessionData) => {
     let deleteList;
     let body;
+    
     it(`should return 401 when using an invalid session ID: ${sessionData.sessionId}`, async () => {
       deleteList = spec()
         .delete(`/list/${listId}`)

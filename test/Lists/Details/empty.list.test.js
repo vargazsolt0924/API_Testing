@@ -5,17 +5,25 @@ const { emptyListSchema } = require('../../../schema/Lists/Details/empty.list.sc
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Empty List Test', () => {
+describe('Lists - Details - Empty List Test', () => {
   let emptyListId;
   let createList;
   let emptyResponse;
   let emptyResponseBody;
 
   beforeAll(async () => {
-    createList = await spec().post('/list').withQueryParams('session_id', SESSION_ID).withJson(request).toss();
+    createList = await spec()
+      .post('/list')
+      .withQueryParams('session_id', SESSION_ID)
+      .withJson(request)
+      .toss();
+
     emptyListId = createList.body.list_id;
 
-    emptyResponse = spec().get(`/list/${emptyListId}`).withQueryParams('session_id', SESSION_ID);
+    emptyResponse = spec()
+      .get(`/list/${emptyListId}`)
+      .withQueryParams('session_id', SESSION_ID);
+
     emptyResponseBody = await emptyResponse.expectStatus(200).toss();
   });
 
@@ -29,6 +37,8 @@ describe('Lists - Empty List Test', () => {
   });
 
   afterAll(async () => {
-    await spec().delete(`/list/${emptyListId}`).withQueryParams('session_id', SESSION_ID).toss();
+    await spec()
+      .delete(`/list/${emptyListId}`)
+      .withQueryParams('session_id', SESSION_ID);
   });
 });

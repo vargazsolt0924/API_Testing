@@ -5,7 +5,7 @@ const { expectedSchema } = require('../../../schema/Lists/Clear/response.schema'
 
 const SESSION_ID = process.env.SESSION_ID;
 
-describe('Lists - Clear List - Invalid or Non-Existing List ID', () => {
+describe('Lists - Clear List - Invalid or Non-Existing List ID test', () => {
   describe.each(listIdTestData)('$description', (data) => {
     let response;
     let body;
@@ -13,7 +13,8 @@ describe('Lists - Clear List - Invalid or Non-Existing List ID', () => {
     beforeAll(async () => {
       response = spec()
         .post(`/list/${data.listId}/clear`)
-        .withQueryParams({ session_id: SESSION_ID, confirm: true })
+        .withQueryParams({ session_id: SESSION_ID, confirm: true });
+
       body = await response.expectStatus(data.expectedStatus);
     });
 

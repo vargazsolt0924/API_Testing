@@ -25,10 +25,12 @@ describe('Lists - General Response Test (Single Detailed Movie)', () => {
       .post(`/list/${populatedListId}/add_item`)
       .withQueryParams('session_id', SESSION_ID)
       .withJson({ media_id: movieToAdd.media_id })
-      .expectStatus(201)
-      .toss();
+      .expectStatus(201);
 
-    populatedResponse = spec().get(`/list/${populatedListId}`).withQueryParams('session_id', SESSION_ID);
+    populatedResponse = spec()
+      .get(`/list/${populatedListId}`)
+      .withQueryParams('session_id', SESSION_ID);
+
     populatedResponseBody = await populatedResponse.expectStatus(200).toss();
   });
 
@@ -38,7 +40,9 @@ describe('Lists - General Response Test (Single Detailed Movie)', () => {
 
     movieFromResponse = populatedResponseBody.body.items[0];
   });
+
   describe.each([movieToAdd])('When the movie title is: $title', (movie) => {
+
     it(`should return the correct movie id: ${movie.media_id}`, async () => {
       expect(movieFromResponse.id).toBe(movie.media_id);
     });
@@ -64,7 +68,9 @@ describe('Lists - General Response Test (Single Detailed Movie)', () => {
     });
 
     afterAll(async () => {
-      await spec().delete(`/list/${populatedListId}`).withQueryParams('session_id', SESSION_ID).toss();
+      await spec()
+        .delete(`/list/${populatedListId}`)
+        .withQueryParams('session_id', SESSION_ID);
     });
   });
 });
