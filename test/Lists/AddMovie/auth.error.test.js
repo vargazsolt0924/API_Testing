@@ -32,7 +32,7 @@ describe('Lists - Add Movie - Authentication test', () => {
     });
 
     it('should return the right error message', () => {
-      expect(body.body.status_message).toBe(sessionData.expectedMessage);
+      expect(body.body.status_message).toEqual(sessionData.expectedMessage);
     });
 
     it('should return the error schema', () => {
@@ -55,7 +55,7 @@ describe('Lists - Add Movie - Authentication test', () => {
     });
 
     it('should return the right error message', () => {
-      expect(body.body.status_message).toBe(apiKeyData.expectedMessage);
+      expect(body.body.status_message).toEqual(apiKeyData.expectedMessage);
     });
 
     it('should return the error schema', ()=>{

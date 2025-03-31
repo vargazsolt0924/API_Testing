@@ -44,19 +44,19 @@ describe('Lists - General Response Test (Single Detailed Movie)', () => {
   describe.each([movieToAdd])('When the movie title is: $title', (movie) => {
 
     it(`should return the correct movie id: ${movie.media_id}`, async () => {
-      expect(movieFromResponse.id).toBe(movie.media_id);
+      expect(movieFromResponse.id).toEqual(movie.media_id);
     });
 
     it(`should return the correct movie title: ${movie.title}`, async () => {
-      expect(movieFromResponse.title).toBe(movie.title);
+      expect(movieFromResponse.title).toEqual(movie.title);
     });
 
     it(`should return the correct movie release date: ${movie.release_date}`, async () => {
-      expect(movieFromResponse.release_date).toBe(movie.release_date);
+      expect(movieFromResponse.release_date).toEqual(movie.release_date);
     });
 
     it(`should return the correct movie original language: ${movie.original_language}`, async () => {
-      expect(movieFromResponse.original_language).toBe(movie.original_language);
+      expect(movieFromResponse.original_language).toEqual(movie.original_language);
     });
 
     it(`should return a valid vote count (greater than or equal to the expected value)`, async () => {

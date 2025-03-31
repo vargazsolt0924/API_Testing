@@ -40,11 +40,11 @@ describe('Lists - Add Movie - Adding the Same Movie Twice test', () => {
     });
 
     it('should return status code 8 in response body', () => {
-      expect(body.body.status_code).toBe(data.responseStatusCode);
+      expect(body.body.status_code).toEqual(data.responseStatusCode);
     });
 
     it('should return a message', () => {
-      expect(body.body.status_message).toBe(data.responseStatusMessage);
+      expect(body.body.status_message).toEqual(data.responseStatusMessage);
     });
 
     it('should return a valid schema', () => {

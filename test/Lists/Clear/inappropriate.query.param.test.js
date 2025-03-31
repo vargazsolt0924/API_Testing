@@ -46,11 +46,11 @@ describe('Lists - Clear - Missing or invalid confirm query param test', () => {
     });
 
     it(`should return the expected response body status code: ${testCase.status_code}`, () => {
-      expect(body.body.status_code).toBe(testCase.status_code);
+      expect(body.body.status_code).toEqual(testCase.status_code);
     });
 
     it(`should return the expected response body status message: ${testCase.status_message}`, () => {
-      expect(body.body.status_message).toBe(testCase.status_message);
+      expect(body.body.status_message).toEqual(testCase.status_message);
     });
   });
 

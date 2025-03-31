@@ -32,11 +32,11 @@ describe('Lists - Check Item Status - Authentication test', () => {
     });
 
     it('should return the correct error message', () => {
-      expect(body.body.status_message).toBe(data.expectedMessage);
+      expect(body.body.status_message).toEqual(data.expectedMessage);
     });
 
     it('should return the correct error code', () => {
-      expect(body.body.status_code).toBe(data.responseBodyStatusCode);
+      expect(body.body.status_code).toEqual(data.responseBodyStatusCode);
     });
 
     it('should match the error schema', () => {

@@ -47,11 +47,11 @@ describe('Lists - Remove Movie - General Response test', () => {
     });
 
     it(`should return the expected response body status code: ${movieData.status_code}`, () => {
-      expect(body.body.status_code).toBe(movieData.status_code);
+      expect(body.body.status_code).toEqual(movieData.status_code);
     });
 
     it(`should return the expected response body status message: ${movieData.status_message}`, () => {
-      expect(body.body.status_message).toBe(movieData.status_message);
+      expect(body.body.status_message).toEqual(movieData.status_message);
     });
   });
 

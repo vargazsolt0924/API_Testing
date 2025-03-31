@@ -30,11 +30,15 @@ describe('Lists - Check Item Status - General Response test', () => {
 
     it(`should return status code ${data.expectedStatus}`, () => {
       expect(checkItemStatusBody.statusCode).toBe(data.expectedStatus);
-      expect(checkItemStatusBody.body).toHaveProperty('item_present');
     });
 
     it('should return the valid schema', () => {
       checkItemStatus.response().to.have.jsonSchema(expectedSchema);
+    });
+
+    it('should return a valid body response', () => {
+      expect(checkItemStatusBody.body).toHaveProperty('id');
+      expect(checkItemStatusBody.body).toHaveProperty('item_present');
     });
 
     afterAll(async () => {

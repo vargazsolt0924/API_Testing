@@ -24,7 +24,7 @@ describe('Lists - Remove Movie - Invalid or Non-Existing List ID', () => {
     });
 
     it(`should return status code ${data.responseStatusCode} in the response body`, () => {
-      expect(body.body.status_code).toBe(data.responseStatusCode);
+      expect(body.body.status_code).toEqual(data.responseStatusCode);
     });
 
     it('should return a valid schema', () => {

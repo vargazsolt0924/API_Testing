@@ -36,8 +36,8 @@ describe('Lists - Add Movie - Invalid Request Body test', () => {
       expect(body.body.status_code).toBe(5);
     });
 
-    it('should return a message', () => {
-      expect(body.body.status_message).toBe(data.responseStatusMessage);
+    it('should return an error message', () => {
+      expect(body.body.status_message).toEqual(data.responseStatusMessage);
     });
 
     it('should return a valid schema', () => {

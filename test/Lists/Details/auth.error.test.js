@@ -31,11 +31,11 @@ describe('Lists - Details - Authentication test', () => {
     });
 
     it('should return the correct error message', () => {
-      expect(body.body.status_message).toBe(apiKeyData.expectedMessage);
+      expect(body.body.status_message).toEqual(apiKeyData.expectedMessage);
     });
 
     it('should return the correct error code', () => {
-      expect(body.body.status_code).toBe(apiKeyData.responseBodyStatusCode);
+      expect(body.body.status_code).toEqual(apiKeyData.responseBodyStatusCode);
     });
 
     it('should match the error schema', () => {

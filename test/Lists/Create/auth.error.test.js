@@ -25,7 +25,7 @@ describe('Lists - Create - AuthenticationW test', () => {
     });
 
     it('should return an authentication error message', () => {
-      expect(body.body.status_message).toBe(data.expectedMessage);
+      expect(body.body.status_message).toEqual(data.expectedMessage);
     });
 
     it('should indicate authentication failure', () => {

@@ -42,12 +42,12 @@ describe('Lists - Remove Movie - Removing a non-existing movie test', () => {
       expect(body.statusCode).toBe(data.expectedStatus);
     });
 
-    it(`should return response status code ${data.responseStatusCode}`, () => {
-      expect(body.body.status_code).toBe(data.responseStatusCode);
+    it(`should return status code ${data.responseStatusCode} in the response body`, () => {
+      expect(body.body.status_code).toEqual(data.responseStatusCode);
     });
 
     it(`should return response message: "${data.responseStatusMessage}"`, () => {
-      expect(body.body.status_message).toBe(data.responseStatusMessage);
+      expect(body.body.status_message).toEqual(data.responseStatusMessage);
     });
 
     it('should return a valid error response schema', () => {
